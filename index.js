@@ -36,7 +36,7 @@ app.post('/scrape-pdf', async (req, res) => {
   let targetUrl = (req.body.url || '').trim();
   if (!targetUrl) return res.status(400).json({ success: false, error: 'Empty URL' });
 
-  // === BYPASS TRACKERS WITH FETCH (NO PUPPETEER) ===
+  // === BYPASS TRACKERS WITH FETCH ===
   try {
     const urlObj = new URL(targetUrl);
     const hostname = urlObj.hostname.toLowerCase();
@@ -115,7 +115,6 @@ async function printInvoiceFly(b, u) {
   return pdf.toString('base64');
 }
 
-// JOIST: HIDE SIDEBAR — LET PUPPETEER DO THE REST
 async function printJoist(browser, url) {
   const page = await browser.newPage();
   await page.setViewport({ width: 1920, height: 1200 });
@@ -140,4 +139,5 @@ async function printJoist(browser, url) {
   return pdf.toString('base64');
 }
 
-app.listen(port, () => console.log(`=== READY on ${port} ===`));
+// THIS LINE WAS MISSING — ADD IT
+app.listen(port, () => console.log(`=== LISTENING ON PORT ${port} ===`));
